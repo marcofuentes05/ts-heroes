@@ -1,19 +1,16 @@
-import logo from './logo.svg';
-import HeroeList, {MyList} from './Components/List'
-
+import HeroeList from './Components/List'
+import Store from './store'
 
 import './App.css';
-const myHeroesList = new MyList()
 
 
 function App() {
   return (
     <div className="App">
-      <HeroeList listComponent={myHeroesList} />
+      <HeroeList />
     </div>
   );
 }
 
-myHeroesList.getHeroes();
 
 export default App;

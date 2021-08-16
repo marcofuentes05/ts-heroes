@@ -1,67 +1,28 @@
-import {FC } from 'react'
+import {FC, useEffect} from 'react'
+import {flowResult} from 'mobx';
 import { observer } from "mobx-react"
-import { makeAutoObservable } from "mobx"
-import https from 'https'
+import { Hero } from "../../types/superhero";
+import {ListComponentInterface} from '../../types/listComponent'
+import {useStore} from '../../store';
+
+import logo from '../../logo.svg';
 
 import './styles.css'
 
-const url = 'https://akabab.github.io/superhero-api/api/all.json';
+const Algo: FC = () => {
+  const {superheroStore} = useStore();
 
-const options = {
-  hostname: url,
-  method: 'GET'
-}
-
-
-interface Hero {
-  id: number,
-  name: string,
-  slug: string,
-  powerstats: {
-    intelligence: number,
-    strength: number,
-    speed: number,
-    durability: number,
-    power: number,
-    combat: number
-  }
-}
-
-interface ListComponentInterface {
-  list: Array<Hero>,
-  isFetching: boolean,
-}
-
-export class MyList implements ListComponentInterface{
-  list: Array<Hero> = []
-  isFetching : boolean = false;
-  constructor() {
-    makeAutoObservable(this)
-  }
-
-  
-  async getHeroes() {
-    this.isFetching = true
-    const response = await fetch(url)
-    this.list = await response.json()
-    this.isFetching = false
-  }
-  // componentDidMount() {
-  //   this.getHeroes()
-  // }
-
-}
-
-const algo: FC<{listComponent: ListComponentInterface}>  = ({ listComponent } ) => (
+  useEffect(() => {
+    superheroStore.index();
+  }, [])
+  return(
   <div>
-    {listComponent.isFetching ? (
-      <h1 className='loading'>
-        Loading...
-      </h1>
+    {superheroStore.isIndexing ? (
+      <img src={logo} alt='' className='loading' />
     ) : (
       <ul>
         {
-          !listComponent.isFetching && listComponent.list && listComponent.list.map((item: Hero) => (
+          !superheroStore.isIndexing && superheroStore.list && superheroStore.list.map((item: Hero) => (
             <li>
               {`NOMBRE: ${item.name} INTELIGENCIA: ${item.powerstats.intelligence}`}
             </li>
@@ -71,6 +32,6 @@ const algo: FC<{listComponent: ListComponentInterface}>  = ({ listComponent } ) 
     )
     }
   </div>
-)
+)}
 
-export default observer(algo)
+export default observer(Algo)

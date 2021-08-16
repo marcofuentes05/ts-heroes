@@ -1,3 +1,8 @@
+html{
+  background: linear-gradient(to bottom, #10c3ff 0%, #f84c4c 100%);
+
+}
+
 .App {
   text-align: center;
 }
@@ -13,7 +18,7 @@
   }
 }
 
-.App-header {
+.App-header { 
   background-color: #282c34;
   min-height: 100vh;
   display: flex;

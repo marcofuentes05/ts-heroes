@@ -8,6 +8,12 @@
 }
 
 .loading {
-  margin-top: 40vh;
+  margin-top:   5vh;
   animation: App-logo-spin infinite 2s linear;
+  height: 90vh;
+  width: auto;
+}
+
+li {
+  color:white;
 }
